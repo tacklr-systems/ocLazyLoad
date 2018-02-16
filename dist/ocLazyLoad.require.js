@@ -1,6 +1,6 @@
 /**
  * oclazyload - Load modules on demand (lazy load) with angularJS
- * @version v1.0.10
+ * @version v1.1.0
  * @link https://github.com/ocombe/ocLazyLoad
  * @license MIT
  * @author Olivier Combe <olivier.combe@gmail.com>
@@ -187,6 +187,14 @@
                     }
                     // new if not registered
                     var newModule = regModules.indexOf(moduleName) === -1;
+
+                    //Make sure module exists (in case load was unsuccessful)
+                    if (!moduleExists(moduleName)) {
+                        console.error("The module '" + moduleName + "' could not to be found. Dynamic loading by ocLazyLoad failed.");
+                        registerModules.pop();
+                        return;
+                    }
+
                     moduleFn = ngModuleFct(moduleName);
                     if (newModule) {
                         regModules.push(moduleName);

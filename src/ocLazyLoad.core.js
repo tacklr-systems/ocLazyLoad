@@ -172,6 +172,14 @@
                     }
                     // new if not registered
                     var newModule = regModules.indexOf(moduleName) === -1;
+
+                    //Make sure module exists (in case load was unsuccessful)
+                    if (!moduleExists(moduleName)) {
+                        console.error("The module '" + moduleName + "' could not to be found. Dynamic loading by ocLazyLoad failed.");
+                        registerModules.pop();
+                        return;
+                    }
+
                     moduleFn = ngModuleFct(moduleName);
                     if (newModule) {
                         regModules.push(moduleName);
